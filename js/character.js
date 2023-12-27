@@ -13,23 +13,26 @@ class Left extends Character {
       this.Y = Y;
     }
     
-    
-    
     snowballLeft() {
       setInterval(() => {
         const snowballLeft = PIXI.Sprite.from('/img/snowball.png');
-        snowballLeft.x = this.X - 30;
-        snowballLeft.y = this.Y;
+        snowballLeft.width = 20;
+        snowballLeft.height = 20;
+        snowballLeft.x = this.X + 30;
+        snowballLeft.y = this.Y + 10;
         app.stage.addChild(snowballLeft);
+        let speedX = Math.round(Math.random() * (1)) + 0.5;
+        let speedY = Math.round(Math.random() * (1.5)) - 0.5;
+        setInterval(() => {
+          snowballLeft.x += speedX;
+          snowballLeft.y += speedY;
+        },10)
       }, 1000);
-    }
 
-    snowballTouch() {
-      if(detectCollision(snowballRight, left)) {
-        this.health = this.health - 1
-      }
+      
+      
     }
-  }
+}
 
 class Right extends Character {
     constructor (X,Y,width,height,health) {
@@ -38,12 +41,23 @@ class Right extends Character {
         this.Y = Y
     }
     snowballRight() {
-       setInterval(function() {
-        const snowballRight = new PIXI.Sprite.from('/img/snowball.png');
-        snowballRight.x = X + 30;
-        snowballRight.y = Y;
+      setInterval(() => {
+         const snowballRight = PIXI.Sprite.from('/img/snowball.png');
+        snowballRight.width = 20;
+        snowballRight.height = 20;
+        snowballRight.x = this.X - 20;
+        snowballRight.y = this.Y + 10;
         app.stage.addChild(snowballRight);
-       },1000)
+        let speedX = Math.round(Math.random() * (1)) + 0.5;
+        let speedY = Math.round(Math.random() * (1.5)) - 0.5;
+        setInterval(() => {
+          snowballRight.x -= speedX;
+          snowballRight.y += speedY;
+        },10)
+      }, 1000);
+
+      
+      
     }
 }
 
@@ -51,7 +65,7 @@ let left;
 function triggerLeft(e) {
     if(e.keyCode == 37) {
         let left1 = new Left( Math.round(Math.random() * (512)),
-         Math.round(Math.random() * (1024)) + 1024,
+         Math.round(Math.random() * (956)),
          30,
          60,
          5
@@ -62,7 +76,28 @@ function triggerLeft(e) {
           left.health = left1.health;
           left.x = left1.X;
           left.y = left1.Y;
+          left1.snowballLeft();
           app.stage.addChild(left);
+    }
+}
+
+let right;
+function triggerRight(e) {
+    if(e.keyCode == 39) {
+        let right1 = new Right( Math.round(Math.random() * (512)) + 512,
+         Math.round(Math.random() * (956)),
+         30,
+         60,
+         5
+         );
+          right = PIXI.Sprite.from('/img/right.png');
+          right.width = right1.width;
+          right.height = right1.height;
+          right.health = right1.health;
+          right.x = right1.X;
+          right.y = right1.Y;
+          right1.snowballRight();
+          app.stage.addChild(right);
     }
 }
 

@@ -12,6 +12,7 @@ app.stage.addChild(background);
 
 window.onload = function() {
     document.body.appendChild(app.view);
-    document.addEventListener("keydown", triggerLeft)
+    document.addEventListener("keydown", triggerLeft);
+    document.addEventListener("keydown", triggerRight);
 };
 
